@@ -11,6 +11,23 @@ Of course you can use this kind of algorithm to realize high-pass, band-pass and
 
 See [result](./result/) and [source code](./src/) folders for details.
 
+
+## Remez exchange algorithm
+
+
+![](./result/remez-algorithm.png)
+
+
+## Examples of Remez LPF results
+
+Frequency-domain and time-domain responses of the Remez LPF:
+
+|                        |                        |
+| ---------------------- | ---------------------- |
+| ![](./result/fir2.png) | ![](./result/fir3.png) |
+| ![](./result/fir4.png) | ![](./result/fir5.png) |
+
+
 ## Reference
 
 [1] 程佩青.数字信号处理教程（第四版）[M].清华大学出版社,2015.
