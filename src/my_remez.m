@@ -1,7 +1,7 @@
 function hn = my_remez(freq, rip)
-% µÚÒ»ÀàÂË²¨Æ÷
+% ç¬¬ä¸€ç±»æ»¤æ³¢å™¨
 
-% ¹À¼Æ³¤¶È
+% ä¼°è®¡é•¿åº¦
 global wp;
 global ws;
 global delta_1;
@@ -17,27 +17,27 @@ N = N_appro(wp, ws, delta_1, delta_2);
 % hn = ones(1,N);
 r = (N+1)/2;
 
-% µü´úÇó½â
+% è¿­ä»£æ±‚è§£
 foot = (wp + pi - ws) / (r-1);
 points = [linspace(0, wp, round(wp/foot) + 1), linspace(ws, pi, round((pi-ws)/foot) + 1)]';
-% pointsÎªÁĞÏòÁ¿
+% pointsä¸ºåˆ—å‘é‡
 % factors = ones(1, r+1); % alpha:0--r-1 delta
 H_d = H_define(points); % 0--r
-M_construct = Matrix_construct(points); % (r+1)¡Á(r+1)
+M_construct = Matrix_construct(points); % (r+1)Ã—(r+1)
 
 factors = linsolve(M_construct, H_d);
-delta = delta_2; % ÉÏÒ»´ÎµÄdeltaÖµ
+delta = delta_2; % ä¸Šä¸€æ¬¡çš„deltaå€¼
 
 
     
 delta_error = 1e-3;
 while abs(abs(factors(end)) - delta) > delta_error
-% abs(factor(end))Îª×îĞÂdeltaÖµ
+% abs(factor(end))ä¸ºæœ€æ–°deltaå€¼
 delta = abs(factors(end));
 E = @Error;
-points =  Extreme_points(E, r+1, delta, factors(1:(end-1))); % r + 1¸ö¼«Öµµã, r+1 = (r-3) + 4
+points =  Extreme_points(E, r+1, delta, factors(1:(end-1))); % r + 1ä¸ªæå€¼ç‚¹, r+1 = (r-3) + 4
 H_d = H_define(points); % 0--r
-M_construct = Matrix_construct(points); % (r+1)¡Á(r+1)
+M_construct = Matrix_construct(points); % (r+1)Ã—(r+1)
 factors = linsolve(M_construct, H_d);
 aaa=magic(3);
 end
@@ -55,7 +55,7 @@ end
 
 
 
-% ÀíÏëÆµÂÊÏìÓ¦
+% ç†æƒ³é¢‘ç‡å“åº”
 function H_d = H_define(w)
 global wp;
 global ws;
@@ -65,13 +65,13 @@ H_d(w >= ws) = 0;
 
 end
 
-% È¨º¯Êı
+% æƒå‡½æ•°
 function W = Weight(w)
 global wp;
 global ws;
 global delta_1;
 global delta_2;
-W = ones(length(w), 1); % È«ÓÃÁĞÏòÁ¿
+W = ones(length(w), 1); % å…¨ç”¨åˆ—å‘é‡
 W(w <= wp) = delta_2/delta_1;
 W(w >= ws) = 1;
 % if w <= wp
@@ -82,9 +82,9 @@ W(w >= ws) = 1;
 end
 
 
-% Éè¼Æº¯Êı--ÆµÂÊÏìÓ¦
+% è®¾è®¡å‡½æ•°--é¢‘ç‡å“åº”
 function P = Design(w,alphas)
-% alphas³¤¶Èr
+% alphasé•¿åº¦r
 % P = 0;
 global r;
 P = zeros(length(w),1);
@@ -94,16 +94,16 @@ end
 aaaa=magic(3);%%%%%%%%%%%%%%%%
 end
 
-% Îó²îº¯Êı
+% è¯¯å·®å‡½æ•°
 function E = Error(w, alphas)
 E = Weight(w).*(H_define(w)-Design(w, alphas));
 aaa=magic(3);%%%%%%%%%%%%%%
 end
 
-% ÏµÊıÇ°µÄ¹¹Ôì¾ØÕó
+% ç³»æ•°å‰çš„æ„é€ çŸ©é˜µ
 function M = Matrix_construct(points)
-% w ³¤¶È lrngth = r+1
-% pointsÎªÁĞÏòÁ¿
+% w é•¿åº¦ lrngth = r+1
+% pointsä¸ºåˆ—å‘é‡
 M = ones(length(points));
 M(:,end) = ((-1).^(0:length(points)-1))' ./ Weight(points);
 for ii = 1:length(points)
@@ -113,20 +113,20 @@ for ii = 1:length(points)
 end
 end
 
-% ·µ»Ø r+1 ¸ö¼«Öµµã
+% è¿”å› r+1 ä¸ªæå€¼ç‚¹
 function points = Extreme_points(E, n, delta, alphas)
-% E Îª Errorº¯Êı¾ä±ú
+% E ä¸º Errorå‡½æ•°å¥æŸ„
 global wp;
 global ws;
 global N;
 n = n-4;
 M = 20*N;
 eps = 1e-2; 
-w = [linspace(eps, wp-eps, M), linspace(ws+eps, pi-eps, M)]'; % ÃÜ¼¯µÄÆµÂÊµã×é
-points = w(abs(diff(sign(diff(E(w, alphas))))) == 2); % ¼«Öµµã
-% ´ËÊ±pointsÎªÁĞÏòÁ¿
+w = [linspace(eps, wp-eps, M), linspace(ws+eps, pi-eps, M)]'; % å¯†é›†çš„é¢‘ç‡ç‚¹ç»„
+points = w(abs(diff(sign(diff(E(w, alphas))))) == 2); % æå€¼ç‚¹
+% æ­¤æ—¶pointsä¸ºåˆ—å‘é‡
 % points = points(abs(E(points)) > delta);
-% ÈôÂú×ãÒªÇóµÄ¼«Öµµã¶àÓÚn¸ö£¬È¡Ç°n¸ö½Ï´óÕß
+% è‹¥æ»¡è¶³è¦æ±‚çš„æå€¼ç‚¹å¤šäºnä¸ªï¼Œå–å‰nä¸ªè¾ƒå¤§è€…
 [values, index] = sort(abs(E(points, alphas)), 'descend');
 points = points(index);
 
@@ -139,6 +139,6 @@ points = points(index);
 points = points(1:n);
 points = [points; 0; wp; ws; pi];
 points = sort(points);
-% ·µ»ØpointsÎªÁĞÏòÁ¿
+% è¿”å›pointsä¸ºåˆ—å‘é‡
 end
 

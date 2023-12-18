@@ -1,31 +1,31 @@
-%Éè¼Æ¼¼ÊõÖ¸±ê
+%è®¾è®¡æŠ€æœ¯æŒ‡æ ‡
 clear;
 freq = [0.3, 0.5];
 mag = [1, 0];
 alpha_p = 1; %dB
 alpha_s = 40; % dB
 
-% ¼ÆËãÈ¨º¯ÊıËùÓÃ
+% è®¡ç®—æƒå‡½æ•°æ‰€ç”¨
 delta_1 = (10^(abs(alpha_p)/20) - 1) / (10^(abs(alpha_p)/20) + 1);
 delta_2 = 10^(-abs(alpha_s)/20);
 rip = [delta_1, delta_2];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% my_remeÉè¼Æ·½·¨½á¹û
+% my_remeè®¾è®¡æ–¹æ³•ç»“æœ
 hn = my_remez(freq, rip);
 N = length(hn);
 
 figure;
 stem(0:N-1,hn);
-title('ÂË²¨Æ÷³å¼¤ÏìÓ¦º¯Êı£¨×ÔÊµÏÖ£©');
+title('æ»¤æ³¢å™¨å†²æ¿€å“åº”å‡½æ•°ï¼ˆè‡ªå®ç°ï¼‰');
 
 figure;
 freqz(hn);
-title('ÂË²¨Æ÷ÆµÂÊÌØĞÔ£¨×ÔÊµÏÖ£©');
+title('æ»¤æ³¢å™¨é¢‘ç‡ç‰¹æ€§ï¼ˆè‡ªå®ç°ï¼‰');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Matlab×Ô´øremezÉè¼Æ·½·¨½á¹û
+% Matlabè‡ªå¸¦remezè®¾è®¡æ–¹æ³•ç»“æœ
 
 [N, f0, m0, w] = remezord(freq, mag, rip);
 hn = remez(N, f0, m0, w);
@@ -33,11 +33,11 @@ n = 0:N;
 
 figure;
 stem(n, hn);
-title('ÂË²¨Æ÷³å¼¤ÏìÓ¦º¯Êı£¨MatlabÄÚÖÃ£©');
+title('æ»¤æ³¢å™¨å†²æ¿€å“åº”å‡½æ•°ï¼ˆMatlabå†…ç½®ï¼‰');
 
 figure;
 freqz(hn);
-title('ÂË²¨Æ÷ÆµÂÊÌØĞÔ£¨MatlabÄÚÖÃ£©');
+title('æ»¤æ³¢å™¨é¢‘ç‡ç‰¹æ€§ï¼ˆMatlabå†…ç½®ï¼‰');
 
 % kaiser window
 
@@ -46,13 +46,13 @@ window = kaiser(N,3.4);
 b = fir1(N-1,0.4,window);
 figure;
 freqz(b,1)
-title('Kaiser´°15½×ÂË²¨Æ÷')
+title('Kaiserçª—15é˜¶æ»¤æ³¢å™¨')
 
 
-% iirÍÖÔ²ÂË²¨Æ÷
+% iiræ¤­åœ†æ»¤æ³¢å™¨
 % FDATool
 
-% ¹ı¶É´ø¿íÓë·ù¶ÈÎó²î
+% è¿‡æ¸¡å¸¦å®½ä¸å¹…åº¦è¯¯å·®
 fp = [0.1, 0.2, 0.3 ,0.4, 0.5, 0.6];
 fs = [0.7, 0.7, 0.7, 0.7, 0.7, 0.7];
 f0 = [zeros(length(fp),1),fp',fs',ones(length(fp),1)];
@@ -68,7 +68,7 @@ for ii = 1:length(fp)
     title(['passband: ',num2str(0),' - ',num2str(f0(ii,2)),', stopband: ',num2str(f0(ii,3)),' - ',num2str(1)]);
 end
 
-% ×ª»¯¹ØÏµ
+% è½¬åŒ–å…³ç³»
 fp = linspace(0.1,0.38,20);
 fp = sort(fp, 'descend');
 fs = linspace(0.42, 0.7, 20);
@@ -85,7 +85,7 @@ figure;
 plot(passbands,deltas)
 xlabel('passband');
 ylabel('delta');
-title('´ø¿í-·ù¶ÈÎó²î¹ØÏµ£¨N=15)');
+title('å¸¦å®½-å¹…åº¦è¯¯å·®å…³ç³»ï¼ˆN=15)');
 
 % subplot(2,1,2);
 % plot(passbands, 20*los10(1-deltas));
@@ -105,7 +105,7 @@ title('´ø¿í-·ù¶ÈÎó²î¹ØÏµ£¨N=15)');
 % end
 
 
-% ÏàÍ¬¹ı¶É´ø¿í
+% ç›¸åŒè¿‡æ¸¡å¸¦å®½
 
 f0 = [0.3, 0.5];
 alpha_p = [1, 1, 1, 0.6, 0.8, 1];
@@ -142,10 +142,10 @@ for ii = 1:6
 %         subplot(3,2,ii*2-1)
 %     end
     plot(w/pi, 20*log10(abs(h)));
-    legend([num2str(N),'½×£¬Í¨´ø',num2str(alpha_p(ii)),'dB£¬×è´ø',num2str(alpha_s(ii)),'dB']);
+    legend([num2str(N),'é˜¶ï¼Œé€šå¸¦',num2str(alpha_p(ii)),'dBï¼Œé˜»å¸¦',num2str(alpha_s(ii)),'dB']);
     grid;
 %     if ii == 6
-%         title('ÏàÍ¬¹ı¶É´ø¿í0.3-0.5²»Í¬·ù¶ÈÎó²îÖ¸±êµÄ·ùÆµÌØĞÔ');
+%         title('ç›¸åŒè¿‡æ¸¡å¸¦å®½0.3-0.5ä¸åŒå¹…åº¦è¯¯å·®æŒ‡æ ‡çš„å¹…é¢‘ç‰¹æ€§');
 %     end
 %     deltas(ii) = delta;
 end
